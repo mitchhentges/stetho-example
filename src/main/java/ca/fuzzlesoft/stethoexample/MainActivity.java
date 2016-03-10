@@ -29,5 +29,8 @@ public class MainActivity extends AppCompatActivity {
         ninjaView.setHasFixedSize(true);
         ninjaView.setLayoutManager(new LinearLayoutManager(this));
         ninjaView.setAdapter(new NinjaAdapter());
+        ninjaView.addItemDecoration(new DividerItemDecoration(this));
     }
+
+
 }
