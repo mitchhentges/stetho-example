@@ -1,7 +1,7 @@
 # Stetho Example
 
 Example app that uses Stetho to demonstrate its super-cool integration with Chrome Developer Tools.
-Demonstrates views into the element tree, network requests, and SQLite DB.
+Demonstrates views for the element tree, network requests, and SQLite DB.
 
 ## Opening Stetho
 
@@ -11,5 +11,5 @@ Demonstrates views into the element tree, network requests, and SQLite DB.
 
 ## Building the App
 
-1. Using IntelliJ/Android Studio, import "build.gradle"
+1. Using IntelliJ/Android Studio, import `build.gradle`
 2. Run the app using "Shift-F10", or the big green "run" button
