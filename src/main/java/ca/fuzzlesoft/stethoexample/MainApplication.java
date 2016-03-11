@@ -9,6 +9,8 @@ import com.facebook.stetho.Stetho;
  * @since 3/10/16.
  */
 public class MainApplication extends Application {
+    public static final String TAG = "StethoExample";
+
     @Override
     public void onCreate() {
         super.onCreate();
