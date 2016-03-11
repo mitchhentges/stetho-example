@@ -1,12 +1,12 @@
 package ca.fuzzlesoft.stethoexample;
 
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,20 +18,16 @@ import ca.fuzzlesoft.stethoexample.NinjaAdapter.ViewHolder;
  */
 public class NinjaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    private final List<Ninja> ninjas = Arrays.asList(
-            new Ninja("Batman McBatmannerson", "bruce@wayne.hooli.xyz"),
-            new Ninja("Agron Kabashi", "agron.kabashi@tretton37.com"),
-            new Ninja("Alexander Klintström", "alexander.klintstrom@tretton37.com"),
-            new Ninja("Alexandra Andersson", "alexandra.andersson@tretton37.com"),
-            new Ninja("Anastasiia Anastasis", "anastasiia.anastasis@tretton37.com"),
-            new Ninja("Anders Ringqvist", "anders.ringqvist@tretton37.com"),
-            new Ninja("Andreas Håkansson", "andreas.hakansson@tretton37.com"),
-            new Ninja("Andreas Nilsson", "andreas.nilsson@tretton37.com"),
-            new Ninja("Andreas Voigt", "andreas.voigt@tretton37.com"),
-            new Ninja("Artem Konovalenkov", "artem.konovalenkov@tretton37.com"),
-            new Ninja("Balazs Gobel", "balazs.gobel@tretton37.com"),
-            new Ninja("Balazs Suhajda", "balazs.suhajda@tretton37.com")
-    );
+    private final List<Ninja> ninjas;
+
+    public NinjaAdapter(List<Ninja> ninjas) {
+        this.ninjas = ninjas;
+    }
+
+    public void addNinjas(List<Ninja> newNinjas) {
+        ninjas.addAll(newNinjas);
+        notifyItemRangeInserted(ninjas.size(), newNinjas.size());
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

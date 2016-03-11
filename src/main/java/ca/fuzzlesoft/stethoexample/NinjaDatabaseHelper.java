@@ -3,26 +3,22 @@ package ca.fuzzlesoft.stethoexample;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * @author mitch
  * @since 3/11/16.
  */
 public class NinjaDatabaseHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 1;
-    private static final String NAME = "Ninjas";
+    public static final int VERSION = 1;
+    public static final String NAME = "Ninjas";
 
-    private final InputStream inputStream;
+    private final List<Ninja> initialNinjas;
 
-    public NinjaDatabaseHelper(Context context, InputStream inputStream) {
+    public NinjaDatabaseHelper(Context context, List<Ninja> initialNinjas) {
         super(context, NAME, null, VERSION);
-        this.inputStream = inputStream;
+        this.initialNinjas = initialNinjas;
     }
 
     @Override
@@ -35,23 +31,14 @@ public class NinjaDatabaseHelper extends SQLiteOpenHelper {
                 + ")"
         );
 
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
         db.beginTransaction();
-        String line;
-        try {
-            while ((line = buffer.readLine()) != null) {
-                String[] vals = line.split(",");
-                String sql = "INSERT INTO " + NAME + " VALUES ("
-                        + "'" + vals[0] + "',"
-                        + "'" + vals[1] + "',"
-                        + "'" + vals[2] + "'"
-                        + ")";
-                db.execSQL(sql);
-            }
-        } catch (IOException e) {
-            Log.e(MainApplication.TAG, "Preloading ninjas failed: " + e.getMessage());
-            db.endTransaction();
-            return;
+        for (Ninja ninja : initialNinjas) {
+            String sql = "INSERT INTO " + NAME + " VALUES ("
+                    + "'" + ninja.getName() + "',"
+                    + "'" + ninja.getEmail() + "',"
+                    + "'" + ninja.getPictureUrl() + "'"
+                    + ")";
+            db.execSQL(sql);
         }
 
         db.setTransactionSuccessful();

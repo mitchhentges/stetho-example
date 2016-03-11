@@ -5,8 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mitch
@@ -26,17 +30,28 @@ public class PrepareDatabaseTask extends AsyncTask<String, Integer, SQLiteDataba
         if (params.length != 1) {
             return null;
         }
-        String filename = params[0];
-        InputStream stream;
 
+        BufferedReader reader;
         try {
-            stream = context.getAssets().open(filename);
+            reader = new BufferedReader(new InputStreamReader(context.getAssets().open(params[0])));
         } catch (IOException e) {
             Log.e(MainApplication.TAG, "Couldn't preload ninjas: " + e.getMessage());
             return null;
         }
 
-        NinjaDatabaseHelper helper = new NinjaDatabaseHelper(context, stream);
+        List<Ninja> initialNinjas = new ArrayList<>();
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                String[] vals = line.split(",");
+                Ninja ninja = new Ninja(vals[0], Ninja.deobfuscateEmail(vals[1]), vals[2]);
+                initialNinjas.add(ninja);
+            }
+        } catch (IOException e) {
+            Log.e(MainApplication.TAG, "Failed to read line from ninja csv: " + e.getMessage());
+        }
+
+        NinjaDatabaseHelper helper = new NinjaDatabaseHelper(context, initialNinjas);
         return helper.getWritableDatabase();
     }
 
