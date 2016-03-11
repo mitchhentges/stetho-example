@@ -7,9 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements DatabaseReadyHandler {
 
     private NinjaAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseReadyHand
 
         new PrepareDatabaseTask(this, this).execute("ninjas.csv");
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        progressBar.setProgress(30);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
     }
 
@@ -57,5 +55,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseReadyHand
 
         cursor.close();
         adapter.addNinjas(newNinjas);
+        progressBar.setVisibility(View.GONE);
     }
 }
