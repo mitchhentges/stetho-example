@@ -13,3 +13,6 @@ Demonstrates views for the element tree, network requests, and SQLite DB.
 
 1. Using IntelliJ/Android Studio, import `build.gradle`
 2. Run the app using "Shift-F10", or the big green "run" button
+
+## Sick Screenshot
+![Best screenshot ever](screenshot.png)
