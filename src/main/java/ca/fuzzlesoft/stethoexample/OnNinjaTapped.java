@@ -3,7 +3,6 @@ package ca.fuzzlesoft.stethoexample;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -11,17 +10,13 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import java.io.IOException;
-
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * @author mitch
  * @since 3/12/16.
  */
-public class OnNinjaTapped implements OnClickListener {
+public class OnNinjaTapped implements OnClickListener, ImageLoadedHandler {
 
     private final Activity activity;
     private final OkHttpClient client;
@@ -37,38 +32,20 @@ public class OnNinjaTapped implements OnClickListener {
     public void onClick(View v) {
         final Ninja ninja = (Ninja) v.getTag(R.id.NINJA_ID);
         mainProgress.setVisibility(View.VISIBLE);
+        new LoadImageTask(client, this).execute(ninja);
+    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Request request = new Request.Builder()
-                        .url(ninja.getPictureUrl())
-                        .build();
+    @Override
+    public void onImageLoaded(Bitmap bitmap) {
+        mainProgress.setVisibility(View.INVISIBLE);
 
-                Response response = null;
-                try {
-                    response = client.newCall(request).execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        ImageView imageView = new ImageView(activity);
+        imageView.setImageBitmap(bitmap);
 
-                final Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
-
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainProgress.setVisibility(View.INVISIBLE);
-
-                        ImageView imageView = new ImageView(activity);
-                        imageView.setImageBitmap(bmp);
-
-                        Dialog dialog = new Dialog(activity);
-                        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                        dialog.setContentView(imageView, new LayoutParams(bmp.getWidth() * 4, bmp.getHeight() * 4));
-                        dialog.show();
-                    }
-                });
-            }
-        }).start();
+        Dialog dialog = new Dialog(activity);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(imageView,
+                new LayoutParams(bitmap.getWidth() * 4, bitmap.getHeight() * 4));
+        dialog.show();
     }
 }
