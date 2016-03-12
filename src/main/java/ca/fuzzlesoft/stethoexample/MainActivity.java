@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout.LayoutParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseReadyHand
         toolbar.setTitle("Tretton37 Ninjas");
         setSupportActionBar(toolbar);
 
-        adapter = new NinjaAdapter(new ArrayList<Ninja>());
+        adapter = new NinjaAdapter(new ArrayList<Ninja>(), new OnNinjaTapped());
         RecyclerView ninjaView = (RecyclerView) findViewById(R.id.ninjaList);
         ninjaView.setHasFixedSize(true);
         ninjaView.setLayoutManager(new LinearLayoutManager(this));

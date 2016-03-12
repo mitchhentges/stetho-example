@@ -19,9 +19,11 @@ import ca.fuzzlesoft.stethoexample.NinjaAdapter.ViewHolder;
 public class NinjaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final List<Ninja> ninjas;
+    private final OnNinjaTapped ninjaTapped;
 
-    public NinjaAdapter(List<Ninja> ninjas) {
+    public NinjaAdapter(List<Ninja> ninjas, OnNinjaTapped ninjaTapped) {
         this.ninjas = ninjas;
+        this.ninjaTapped = ninjaTapped;
     }
 
     public void addNinjas(List<Ninja> newNinjas) {
