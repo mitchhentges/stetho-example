@@ -1,14 +1,19 @@
 package ca.fuzzlesoft.stethoexample;
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout.LayoutParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +32,23 @@ public class MainActivity extends AppCompatActivity implements DatabaseReadyHand
         toolbar.setTitle("Tretton37 Ninjas");
         setSupportActionBar(toolbar);
 
-        RecyclerView ninjaView = (RecyclerView) findViewById(R.id.ninjaList);
         adapter = new NinjaAdapter(new ArrayList<Ninja>());
+        RecyclerView ninjaView = (RecyclerView) findViewById(R.id.ninjaList);
         ninjaView.setHasFixedSize(true);
         ninjaView.setLayoutManager(new LinearLayoutManager(this));
-        ninjaView.setAdapter(adapter);
         ninjaView.addItemDecoration(new DividerItemDecoration(this));
-
-        new PrepareDatabaseTask(this, this).execute("ninjas.csv");
+        ninjaView.setAdapter(adapter);
 
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
+
+        new PrepareDatabaseTask(this, this).execute("ninjas.csv");
+        Dialog dialog = new Dialog(this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.agron));
+        dialog.setContentView(imageView);
+        dialog.show();
     }
 
     @Override
