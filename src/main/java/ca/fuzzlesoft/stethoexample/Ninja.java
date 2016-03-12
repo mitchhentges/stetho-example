@@ -42,4 +42,9 @@ public class Ninja {
         }
         return result.toString();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Ninja{name='%s', email='%s', pictureUrl='%s'}", name, email, pictureUrl);
+    }
 }

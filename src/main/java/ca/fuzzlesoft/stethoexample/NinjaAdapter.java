@@ -35,12 +35,14 @@ public class NinjaAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ninja_element, parent, false);
+        view.setOnClickListener(ninjaTapped);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Ninja ninja = ninjas.get(position);
+        holder.container.setTag(R.id.NINJA_ID, ninja);
         holder.name.setText(ninja.getName());
         holder.email.setText(ninja.getEmail());
     }
@@ -51,11 +53,13 @@ public class NinjaAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public RelativeLayout container;
         public TextView name;
         public TextView email;
 
         public ViewHolder(RelativeLayout layout) {
             super(layout);
+            container = layout;
             name = (TextView) layout.findViewById(R.id.name);
             email = (TextView) layout.findViewById(R.id.email);
         }
