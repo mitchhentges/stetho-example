@@ -39,6 +39,10 @@ public class OnNinjaTapped implements OnClickListener, ImageLoadedHandler {
     public void onImageLoaded(Bitmap bitmap) {
         mainProgress.setVisibility(View.INVISIBLE);
 
+        if (bitmap == null) {
+            return;
+        }
+
         ImageView imageView = new ImageView(activity);
         imageView.setImageBitmap(bitmap);
 

@@ -43,8 +43,6 @@ public class LoadImageTask extends AsyncTask<Ninja, Integer, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        if (bitmap != null) {
-            handler.onImageLoaded(bitmap);
-        }
+        handler.onImageLoaded(bitmap);
     }
 }
