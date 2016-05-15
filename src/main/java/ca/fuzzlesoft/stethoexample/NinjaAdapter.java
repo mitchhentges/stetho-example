@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ca.fuzzlesoft.stethoexample.NinjaAdapter.ViewHolder;
@@ -28,7 +26,7 @@ public class NinjaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public void addNinjas(List<Ninja> newNinjas) {
         ninjas.addAll(newNinjas);
-        notifyItemRangeInserted(ninjas.size(), newNinjas.size());
+        notifyDataSetChanged();
     }
 
     @Override
