@@ -27,7 +27,7 @@ public class LoadImageTask extends AsyncTask<Ninja, Integer, Bitmap> {
     @Override
     protected Bitmap doInBackground(Ninja... params) {
         Request request = new Request.Builder()
-                .url("http://" + params[0].getPictureUrl())
+                .url("https://" + params[0].getPictureUrl())
                 .build();
 
         Response response;
