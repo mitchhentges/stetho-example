@@ -44,6 +44,10 @@ public class PrepareDatabaseTask extends AsyncTask<String, Integer, SQLiteDataba
         try {
             while ((line = reader.readLine()) != null) {
                 String[] vals = line.split(",");
+                if (vals.length < 3) {
+                    continue; // Is a blank or incomplete line
+                }
+
                 Ninja ninja = new Ninja(vals[0], Ninja.deobfuscateEmail(vals[1]), vals[2]);
                 initialNinjas.add(ninja);
             }
