@@ -10,8 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements DatabaseReadyHand
         setContentView(R.layout.activity_main);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
